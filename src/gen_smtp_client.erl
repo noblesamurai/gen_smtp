@@ -49,10 +49,15 @@
 -endif.
 
 -type smtp_option()  :: {ssl, boolean()}
+                      | {no_mx_lookups, boolean()}
                       | {tls,  always | never | if_available}
                       | {auth, always | never | if_available}
+                      | {retries, pos_integer()}
                       | {hostname, inet:hostname()}
-                      | {retries, pos_integer()}.
+                      | {relay, string()}
+                      | {port, pos_integer()}
+                      | {username, string()}
+                      | {password, string()}.
 -type smtp_options() :: [smtp_option()].
 
 -type email() :: {string() | binary(),
