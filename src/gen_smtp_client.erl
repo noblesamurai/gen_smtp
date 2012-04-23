@@ -60,9 +60,9 @@
                       | {password, string()}.
 -type smtp_options() :: [smtp_option()].
 
--type email() :: {string() | binary(),
-                  [string() | binary(), ...],
-                  string() | binary() | function()}.
+-type email() :: {From::string() | binary(),
+                  To::[string() | binary(), ...],
+                  Body::string() | binary() | fun(() -> string() | binary())}.
 
 %% @doc Send an email in a non-blocking fashion via a spawned_linked process.
 %% The process will exit abnormally on a send failure.
@@ -258,7 +258,7 @@ try_RCPT_TO([To | Tail], Socket, Extensions) ->
 	% someone was bad and didn't put in the angle brackets
 	try_RCPT_TO(["<"++To++">" | Tail], Socket, Extensions).
 
--spec try_DATA(Body :: binary() | function(), Socket :: socket:socket(), Extensions :: list()) -> binary().
+-spec try_DATA(Body :: string() | binary() | fun(() -> string() | binary()), Socket :: socket:socket(), Extensions :: list()) -> binary().
 try_DATA(Body, Socket, Extensions) when is_function(Body) ->
     try_DATA(Body(), Socket, Extensions);
 try_DATA(Body, Socket, _Extensions) ->
