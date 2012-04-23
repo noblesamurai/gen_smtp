@@ -35,17 +35,15 @@
 -define(TIMEOUT, 1200000).
 
 -ifdef(TEST).
+
 -include_lib("eunit/include/eunit.hrl").
 -compile(export_all).
+
 -else.
 
 %% Public API.
 -export([send/2, send/3, send_blocking/2]).
 
-%% Low level API.
--export([connect/2, quit/1,
-         try_EHLO/2, try_STARTTLS/3, try_AUTH/3,
-         try_MAIL_FROM/3, try_RCPT_TO/3, try_DATA/3]).
 -endif.
 
 -type smtp_option()  :: {ssl, boolean()}
